@@ -85,8 +85,15 @@ Setup:
 1. Add GitHub as an OIDC identity provider in IAM:
    `token.actions.githubusercontent.com`, audience `sts.amazonaws.com`.
 2. Create an IAM role that trusts it, limited to
-   `repo:avinashjaiengineer/argocd-mlops-gitops:ref:refs/heads/main`, and attach
-   ECR push permissions (for example `AmazonEC2ContainerRegistryPowerUser`).
+   `main` of this repo, and attach ECR push permissions (for example
+   `AmazonEC2ContainerRegistryPowerUser`). GitHub now puts owner and repo IDs
+   in the `sub` claim
+   (`repo:avinashjaiengineer@331991776/argocd-mlops-gitops@1402965963:ref:refs/heads/main`),
+   so allow both that form and the older
+   `repo:avinashjaiengineer/argocd-mlops-gitops:ref:refs/heads/main`. If the
+   step fails with `Not authorized to perform sts:AssumeRoleWithWebIdentity`,
+   look up the `AssumeRoleWithWebIdentity` event in CloudTrail to see the
+   exact `sub` that GitHub sent.
 3. Add a repo variable `AWS_ROLE_ARN` with the role's ARN
    (Settings → Secrets and variables → Actions → Variables).
 4. If `main` is a protected branch, allow `github-actions[bot]` to push to it,
