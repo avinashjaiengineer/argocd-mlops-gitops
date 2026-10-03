@@ -28,7 +28,7 @@
                  ML/AI API Pods
                        │
                        ▼
-          AWS ALB (k8s/alb/ingress.yaml, needs AWS LB Controller)
+          AWS ALB (k8s/ingress.yaml, via AWS LB Controller)
                        │
                        ▼
                     Internet
@@ -57,7 +57,7 @@ edit `k8s/*.yaml`, push, and Argo CD syncs it.
 |------|---------|
 | `app/` | FastAPI service: `/`, `/health`, `/predict` |
 | `k8s/` | Plain manifests that Argo CD syncs (top level only) |
-| `k8s/alb/` | ALB Ingress, not synced until the AWS LB Controller is installed |
+| `k8s/ingress.yaml` | ALB Ingress (requires the AWS Load Balancer Controller) |
 | `helm/ml-api/` | Level 2: the same app as a Helm chart, plus dev/prod values |
 | `argocd/` | Argo CD namespace, AppProject and Application |
 | `scripts/` | Create the EKS cluster and ECR repo, install Argo CD |

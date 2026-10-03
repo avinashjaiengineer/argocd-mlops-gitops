@@ -1,10 +1,5 @@
-# Kept in a subfolder on purpose: the Argo CD Application syncs only the
-# top level of k8s/ (directory.recurse is off), so this is NOT applied yet.
-#
-# It needs the AWS Load Balancer Controller installed on the cluster. Without
-# it the Ingress never gets an address and Argo CD reports it as
-# "Progressing" forever. Once the controller is installed, move this file up
-# into k8s/ (or turn on directory.recurse in argocd/application.yaml).
+# Needs the AWS Load Balancer Controller on the cluster. Without it the
+# Ingress never gets an address and Argo CD keeps reporting "Progressing".
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
