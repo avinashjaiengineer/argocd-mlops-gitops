@@ -3,14 +3,17 @@
   Creates the EKS cluster and the ECR repository for the GitOps ML platform.
 
 .NOTES
-  Costs money while running (EKS control plane + 2x t3.medium + NAT gateway,
-  roughly USD 0.25/hour). Tear down with:
+  Costs money while running (EKS control plane + 2x m7i-flex.large + NAT gateway,
+  roughly USD 0.35/hour). Tear down with:
     eksctl delete cluster --name argocd-mlops --region us-east-1
 #>
 param(
     [string]$ClusterName = "argocd-mlops",
     [string]$Region = "us-east-1",
-    [string]$NodeType = "t3.medium",
+    # m7i-flex.large is free-tier eligible. Accounts on the AWS Free plan cannot
+    # launch t3.medium: the node group then hangs in CREATING, and CloudTrail
+    # shows RunInstances failing with "instance type is not eligible for Free Tier".
+    [string]$NodeType = "m7i-flex.large",
     [string]$EcrRepository = "argocd-ml-api"
 )
 
