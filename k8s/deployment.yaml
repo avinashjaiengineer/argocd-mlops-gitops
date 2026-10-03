@@ -22,7 +22,7 @@ spec:
       - name: ml-api
         # The GitHub Actions workflow rewrites this tag on every build.
         # If you fork this project, change the account ID to your own.
-        image: 482545366109.dkr.ecr.us-east-1.amazonaws.com/argocd-ml-api:1.0.0
+        image: 482545366109.dkr.ecr.us-east-1.amazonaws.com/argocd-ml-api:e0d8e7a
         ports:
         - containerPort: 8000
           name: http
