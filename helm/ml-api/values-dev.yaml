@@ -1,0 +1,12 @@
+replicaCount: 1
+
+env:
+  APP_VERSION: "1.0.0-dev"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi

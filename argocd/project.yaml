@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ml-platform
+  namespace: argocd
+spec:
+  description: GitOps ML/AI API workloads
+  # If you fork this project, point this at your own repo.
+  sourceRepos:
+  - https://github.com/avinashjaiengineer/argocd-mlops-gitops.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: ml-platform
+  # Namespace is the only cluster-scoped resource this project may create.
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace

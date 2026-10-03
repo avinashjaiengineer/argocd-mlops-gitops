@@ -1,0 +1,29 @@
+# Kept in a subfolder on purpose: the Argo CD Application syncs only the
+# top level of k8s/ (directory.recurse is off), so this is NOT applied yet.
+#
+# It needs the AWS Load Balancer Controller installed on the cluster. Without
+# it the Ingress never gets an address and Argo CD reports it as
+# "Progressing" forever. Once the controller is installed, move this file up
+# into k8s/ (or turn on directory.recurse in argocd/application.yaml).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ml-api
+  namespace: ml-platform
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ml-api
+            port:
+              number: 80

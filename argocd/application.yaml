@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ml-api
+  namespace: argocd
+spec:
+  project: ml-platform
+
+  source:
+    # If you fork this project, point this at your own repo.
+    repoURL: https://github.com/avinashjaiengineer/argocd-mlops-gitops.git
+    targetRevision: main
+    path: k8s
+    directory:
+      recurse: false
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ml-platform
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
